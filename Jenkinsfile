@@ -36,24 +36,24 @@ pipeline {
             }
         }
 
-        stage('Deploy') {
-            steps {
-                echo 'Deploying Student Task Tracker'
-                sh 'docker build -t student-task-tracker:${BUILD_NUMBER} .'
-                sh 'docker rm -f student-task-tracker-app || true'
-                sh 'docker run -d --name student-task-tracker-app -p 5002:5000 student-task-tracker:${BUILD_NUMBER}'
-                sh 'sleep 3'
-                sh 'curl -f http://localhost:5002/'
-            }
-        }
+       stage('Deploy') {
+    steps {
+        echo 'Deploying Student Task Tracker'
+        sh '/usr/local/bin/docker build -t student-task-tracker:${BUILD_NUMBER} .'
+        sh '/usr/local/bin/docker rm -f student-task-tracker-app || true'
+        sh '/usr/local/bin/docker run -d --name student-task-tracker-app -p 5002:5000 student-task-tracker:${BUILD_NUMBER}'
+        sh 'sleep 3'
+        sh 'curl -f http://localhost:5002/'
+    }
+}
 
-        stage('Release') {
-            steps {
-                echo "Creating release ${BUILD_NUMBER}"
-                sh 'docker tag student-task-tracker:${BUILD_NUMBER} student-task-tracker:v1.0.${BUILD_NUMBER}'
-                sh 'docker tag student-task-tracker:${BUILD_NUMBER} student-task-tracker:latest'
-            }
-        }
+stage('Release') {
+    steps {
+        echo "Creating release ${BUILD_NUMBER}"
+        sh '/usr/local/bin/docker tag student-task-tracker:${BUILD_NUMBER} student-task-tracker:v1.0.${BUILD_NUMBER}'
+        sh '/usr/local/bin/docker tag student-task-tracker:${BUILD_NUMBER} student-task-tracker:latest'
+    }
+}
 
     }
 }
