@@ -4,15 +4,16 @@ pipeline {
     stages {
 
         stage('Build') {
-            steps {
-                echo 'Building Student Task Tracker'
-                sh 'python3 -m venv .jenkins-venv'
-                sh '.jenkins-venv/bin/pip install -r requirements.txt'
-                sh 'mkdir -p build'
-                sh 'tar -czf build/student-task-tracker-${BUILD_NUMBER}.tar.gz app.py templates requirements.txt'
-                archiveArtifacts artifacts: 'build/*.tar.gz', fingerprint: true
-            }
-        }
+    steps {
+        echo 'Building Student Task Tracker'
+        sh 'python3 -m venv .jenkins-venv'
+        sh '.jenkins-venv/bin/python -m pip install --upgrade pip'
+        sh '.jenkins-venv/bin/pip install -r requirements.txt'
+        sh 'mkdir -p build'
+        sh 'tar -czf build/student-task-tracker-${BUILD_NUMBER}.tar.gz app.py templates requirements.txt'
+        archiveArtifacts artifacts: 'build/*.tar.gz', fingerprint: true
+    }
+}
 
         stage('Test') {
             steps {
