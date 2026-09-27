@@ -1,3 +1,4 @@
+import os
 from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
@@ -46,4 +47,5 @@ def delete_task(task_id):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    host = os.getenv("FLASK_HOST", "127.0.0.1")
+    app.run(host=host, port=5000)
