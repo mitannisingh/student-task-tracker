@@ -1,4 +1,4 @@
-bandit==1.9.4
+bandit==1.8.6
 blinker==1.9.0
 click==8.5.0
 coverage==7.16.1
